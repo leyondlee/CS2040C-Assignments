@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
-
 #include <iostream>
+
 using namespace std;
 
 #ifndef HEAPHPP
@@ -19,7 +19,7 @@ void Heap<T>::_bubbleUp(int index) {
 	if (index <= 0) {
 		return;
 	}
-	
+
 	int parentIndex = _getParentIndex(index);
 	if (_heap[index] > _heap[parentIndex]) {
 		_swap(index, parentIndex);
@@ -34,7 +34,7 @@ void Heap<T>::_bubbleDown(int index) {
 	if (leftIndex >= _n || rightIndex >= _n) {
 		return;
 	}
-	
+
 	bool isLeftValid = _isValidIndex(leftIndex);
 	bool isRightValid = _isValidIndex(rightIndex);
 	if (isLeftValid && isRightValid) {
@@ -85,51 +85,48 @@ void Heap<T>::printHeapArray() {
 }
 
 template <class T>
-int Heap<T>::_lookFor(T x){ // not a very good implementation, but just use this for now.
-    int i;
-    for(i=0;i<_n;i++)
-        if (_heap[i] == x)
-            return i;
-    
-    return -1;
+int Heap<T>::_lookFor(T x) { // not a very good implementation, but just use this for now.
+	int i;
+	for (i = 0; i < _n; i++)
+		if (_heap[i] == x)
+			return i;
+
+	return -1;
 }
 
 template <class T>
-void Heap<T>::decreaseKey(T from, T to)
-{
+void Heap<T>::decreaseKey(T from, T to) {
 	int index = _lookFor(from);
 	if (index == -1) {
 		return;
 	}
-	
+
 	_heap[index] = to;
 	_bubbleDown(index);
 }
 
 
 template <class T>
-void Heap<T>::increaseKey(T from, T to)
-{
+void Heap<T>::increaseKey(T from, T to) {
 	int index = _lookFor(from);
 	if (index == -1) {
 		return;
 	}
-	
+
 	_heap[index] = to;
 	_bubbleUp(index);
 }
 
 template <class T>
-void Heap<T>::deleteItem(T x)
-{
+void Heap<T>::deleteItem(T x) {
 	int index = _lookFor(x);
 	if (index == -1) {
 		return;
 	}
-	
+
 	_n -= 1;
 	_swap(index, _n);
-	
+
 	int parent = _getParentIndex(index);
 	if (index > 0 && _heap[index] > _heap[parent]) {
 		_bubbleUp(index);
@@ -140,48 +137,47 @@ void Heap<T>::deleteItem(T x)
 
 template <class T>
 void Heap<T>::printTree() {
-    int parity = 0;
+	int parity = 0;
 	if (_n == 0)
 		return;
-	int space = pow(2,1 + (int) log2f(_n)),i;
-	int nLevel = (int) log2f(_n)+1;
-	int index = 0,endIndex;
-    int tempIndex;
-	
-	for (int l = 0; l < nLevel; l++)
-	{
+	int space = pow(2, 1 + (int) log2f(_n)), i;
+	int nLevel = (int) log2f(_n) + 1;
+	int index = 0, endIndex;
+	int tempIndex;
+
+	for (int l = 0; l < nLevel; l++) {
 		index = 1;
-        parity = 0;
+		parity = 0;
 		for (i = 0; i < l; i++)
 			index *= 2;
 		endIndex = index * 2 - 1;
 		index--;
-        tempIndex = index;
-        while (index < _n && index < endIndex) {
-            for (i = 0; i < space-1; i++)
-                cout << " ";
-            if(index==0)
-                cout << "|";
-            else if (parity)
-                cout << "\\";
-            else
-                cout << "/";
-            parity = !parity;
-            for (i = 0; i < space; i++)
-                cout << " ";
+		tempIndex = index;
+		while (index < _n && index < endIndex) {
+			for (i = 0; i < space - 1; i++)
+				cout << " ";
+			if (index == 0)
+				cout << "|";
+			else if (parity)
+				cout << "\\";
+			else
+				cout << "/";
+			parity = !parity;
+			for (i = 0; i < space; i++)
+				cout << " ";
 			index++;
 		}
-        cout << endl;
-        index=tempIndex;
+		cout << endl;
+		index = tempIndex;
 		while (index < _n && index < endIndex) {
-			for (i = 0; i < (space-1-((int) log10(_heap[index]))); i++)
+			for (i = 0; i < (space - 1 - ((int) log10(_heap[index]))); i++)
 				cout << " ";
 			cout << _heap[index];
 			for (i = 0; i < space; i++)
 				cout << " ";
 			index++;
 		}
-		
+
 		cout << endl;
 		space /= 2;
 	}
@@ -193,7 +189,7 @@ bool Heap<T>::_isValidIndex(int index) {
 	if (index >= 0 && index < _n) {
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -202,7 +198,7 @@ int Heap<T>::_getParentIndex(int index) {
 	if (index <= 0) {
 		return -1;
 	}
-	
+
 	return ((index - 1) / 2);
 }
 

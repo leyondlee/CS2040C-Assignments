@@ -5,19 +5,17 @@
 
 #include <iostream>
 #include "simpleLinkedListTemplate.h"
+
 using namespace std;
 
-
 template <class T>
-ListNode<T>::ListNode(T n)
-{
+ListNode<T>::ListNode(T n) {
 	_item = n;
 	_next = NULL;
 }
 
 template <class T>
-void List<T>::insertHead(T n)
-{
+void List<T>::insertHead(T n) {
 	ListNode<T> *aNewNode = new ListNode<T>(n);
 	aNewNode->_next = _head;
 	_head = aNewNode;
@@ -25,8 +23,7 @@ void List<T>::insertHead(T n)
 };
 
 template <class T>
-void List<T>::removeHead()
-{
+void List<T>::removeHead() {
 	if (_size > 0) {
 		ListNode<T> *temp = _head;
 		_head = _head->_next;
@@ -48,27 +45,25 @@ void List<T>::print(bool withNL) {
 		temp = temp->_next;
 	}
 	cout << endl;
-	  
+
 }
 
 template <class T>
 bool List<T>::exist(T n) {
 
 	// modify this
-	return false; 
+	return false;
 }
 
 template <class T>
-T List<T>::headItem()
-{
+T List<T>::headItem() {
 	if (_size)
 		return *_head;
 }
 
 
 template <class T>
-List<T>::~List()
-{
+List<T>::~List() {
 	while (_head)
 		removeHead();
 };
